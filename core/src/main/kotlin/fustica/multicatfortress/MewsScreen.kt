@@ -7,18 +7,22 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 
 class MewsScreen: Screen, InputProcessor{
 
     var mews = 0
+    val cat = Rectangle(200f, 200f, 100f, 100f)
 
     //text
     lateinit var batch: SpriteBatch
     lateinit var font: BitmapFont
 
     //clics
-    //var mouseClickCoordinate = Vector2(0f,0f)
+    var mouseClickCoordinate = Vector2(0f,0f)
     var mouseClicked = false
 
 
@@ -39,6 +43,13 @@ class MewsScreen: Screen, InputProcessor{
         batch.begin()
         font.draw(batch, "Mews: "+mews, 100f, 400f)
         batch.end ()
+
+        val shapeRenderer: ShapeRenderer = ShapeRenderer()
+        shapeRenderer.begin(ShapeType.Filled)
+        shapeRenderer.setColor(1f, 0.5f, 0.5f, 1f)
+
+        shapeRenderer.rect(cat.x, cat.y, cat.width, cat.height)
+        shapeRenderer.end()
     }
 
     override fun resize(p0: Int, p1: Int) {
@@ -75,10 +86,18 @@ class MewsScreen: Screen, InputProcessor{
     }
 
     override fun touchDown(p0: Int, p1: Int, p2: Int, p3: Int): Boolean {
-        //mouseClickCoordinate.x = p0.toFloat()
-        //mouseClickCoordinate.y = p1.toFloat()
+        mouseClickCoordinate.x = p0.toFloat()
+        mouseClickCoordinate.y = p1.toFloat()
+
+        if (mouseClickCoordinate.x > cat.x
+            && mouseClickCoordinate.x < cat.x + cat.width
+            && mouseClickCoordinate.y > cat.y
+            && mouseClickCoordinate.y < cat.y + cat.height){
+
+            mews += 1
+        }
+
         mouseClicked = true
-        mews += 1
         return true
     }
 
