@@ -34,10 +34,12 @@ class Main : Game(), InputProcessor {
 
     //screens
     lateinit var mewsScreen: MewsScreen
+    lateinit var fishScreen: FishScreen
 
     override fun create() {
 
         mewsScreen = MewsScreen()
+        fishScreen = FishScreen()
 
 
         //text
@@ -88,6 +90,9 @@ class Main : Game(), InputProcessor {
         if (Keys.NUM_1 == p0) {
             Gdx.input.setInputProcessor(mewsScreen)
             setScreen(mewsScreen)
+        }  else if (Keys.NUM_2 ==p0){
+            Gdx.input.setInputProcessor(fishScreen)
+            setScreen(fishScreen)
         }
 
         return true
