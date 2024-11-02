@@ -1,7 +1,9 @@
 package fustica.multicatfortress
 
 import com.badlogic.gdx.ApplicationAdapter
+import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
@@ -14,7 +16,7 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 
 
-class Main : ApplicationAdapter(), InputProcessor {
+class Main : Game(), InputProcessor {
 
     //train
     val train = Rectangle(100f, 500f, 100f, 100f)
@@ -30,9 +32,12 @@ class Main : ApplicationAdapter(), InputProcessor {
     var mouseClickCoordinate = Vector2(0f,0f)
     var mouseClicked = false
 
-    override fun create() {
-        super.create()
+    //screens
+    lateinit var mewsScreen: MewsScreen
 
+    override fun create() {
+
+        mewsScreen = MewsScreen()
 
 
         //text
@@ -41,7 +46,7 @@ class Main : ApplicationAdapter(), InputProcessor {
         font.setColor(Color.BLACK)
 
 
- //clicks
+        //clicks
         Gdx.input.setInputProcessor(this)
     }
 
@@ -76,10 +81,15 @@ class Main : ApplicationAdapter(), InputProcessor {
         batch.end ()
 
 
-
+        super.render()
     }
 
     override fun keyDown(p0: Int): Boolean {
+        if (Keys.NUM_1 == p0) {
+            Gdx.input.setInputProcessor(mewsScreen)
+            setScreen(mewsScreen)
+        }
+
         return true
     }
 
